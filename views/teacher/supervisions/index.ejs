@@ -1,0 +1,41 @@
+<div class="space-y-6">
+    <div class="flex justify-between items-center">
+        <h1 class="text-2xl font-bold text-gray-800">บันทึกการนิเทศ</h1>
+        <a href="/teacher/supervisions/create" class="btn btn-primary">➕ บันทึกนิเทศใหม่</a>
+    </div>
+
+    <div class="card">
+        <% if (supervisions.length===0) { %>
+            <div class="text-center py-12">
+                <span class="text-4xl mb-4 block">📝</span>
+                <p class="text-gray-500">ยังไม่มีบันทึกการนิเทศ</p>
+                <a href="/teacher/supervisions/create" class="btn btn-primary mt-4">บันทึกนิเทศครั้งแรก</a>
+            </div>
+            <% } else { %>
+                <table class="w-full">
+                    <thead>
+                        <tr class="text-left border-b">
+                            <th class="pb-3 text-gray-600">วันที่</th>
+                            <th class="pb-3 text-gray-600">สถานประกอบการ</th>
+                            <th class="pb-3 text-gray-600">บันทึก</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% supervisions.forEach(s=> { %>
+                            <tr class="border-b hover:bg-gray-50">
+                                <td class="py-3">
+                                    <%= new Date(s.visitDate).toLocaleDateString('th-TH') %>
+                                </td>
+                                <td class="py-3 font-medium">
+                                    <%= s.company ? s.company.name : '-' %>
+                                </td>
+                                <td class="py-3 text-gray-600 max-w-md truncate">
+                                    <%= s.notes || '-' %>
+                                </td>
+                            </tr>
+                            <% }); %>
+                    </tbody>
+                </table>
+                <% } %>
+    </div>
+</div>

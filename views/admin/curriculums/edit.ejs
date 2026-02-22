@@ -1,0 +1,37 @@
+<div class="space-y-6">
+    <div class="flex items-center gap-4">
+        <a href="/admin/curriculums" class="text-gray-500 hover:text-gray-700">← กลับ</a>
+        <h1 class="text-2xl font-bold text-gray-800">แก้ไขหลักสูตร</h1>
+    </div>
+    <div class="card max-w-2xl">
+        <form action="/admin/curriculums/<%= curriculum._id %>" method="POST" class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">รหัสหลักสูตร</label>
+                <input type="text" name="code" class="input" value="<%= curriculum.code %>" required>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">ชื่อหลักสูตร</label>
+                <input type="text" name="name" class="input" value="<%= curriculum.name %>" required>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">ระดับชั้น</label>
+                <select name="level" class="input" required>
+                    <% levels.forEach(l=> { %>
+                        <option value="<%= l._id %>" <%=curriculum.level &&
+                            curriculum.level.toString()===l._id.toString() ? 'selected' : '' %>><%= l.name %>
+                        </option>
+                        <% }); %>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">จำนวนวันฝึกงาน</label>
+                <input type="number" name="internshipDuration" class="input"
+                    value="<%= curriculum.internshipDuration %>" required min="1">
+            </div>
+            <div class="flex gap-3 pt-4">
+                <button type="submit" class="btn btn-primary">บันทึก</button>
+                <a href="/admin/curriculums" class="btn btn-outline">ยกเลิก</a>
+            </div>
+        </form>
+    </div>
+</div>

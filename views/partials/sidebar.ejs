@@ -1,0 +1,159 @@
+<% const currentPath=typeof req !=='undefined' && req.path ? req.path : '/' ; const userRole=typeof user !=='undefined'
+    && user ? user.role : '' ; const isActive=(path)=> currentPath.startsWith(path) ? 'active' : '';
+    %>
+
+    <aside id="sidebar" class="sidebar-glass -translate-x-full lg:translate-x-0">
+        <!-- Brand Header -->
+        <div class="px-6 py-8">
+            <div class="flex items-center gap-4">
+                <div
+                    class="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center text-3xl shadow-lg border border-white/30">
+                    🎓
+                </div>
+                <div>
+                    <h1 class="font-display font-bold text-white text-xl tracking-tight">Smart Intern</h1>
+                    <p class="text-[11px] text-white/60 font-semibold uppercase tracking-widest">Tracking System</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scrollable Nav -->
+        <nav class="flex-1 px-4 space-y-1 overflow-y-auto custom-scrollbar">
+
+            <% if (userRole==='admin' ) { %>
+                <div class="px-3 py-3 text-[10px] font-bold text-white/40 uppercase tracking-[0.2em]">Dashboard</div>
+                <a href="/admin/dashboard" class="nav-item <%= isActive('/admin/dashboard') %>">
+                    <i data-feather="grid" class="w-5 h-5"></i>
+                    <span>ภาพรวม</span>
+                </a>
+
+                <div class="px-3 py-3 mt-4 text-[10px] font-bold text-white/40 uppercase tracking-[0.2em]">จัดการข้อมูล
+                </div>
+                <a href="/admin/academic-years" class="nav-item <%= isActive('/admin/academic-years') %>">
+                    <i data-feather="calendar" class="w-5 h-5"></i>
+                    <span>ปีการศึกษา</span>
+                </a>
+                <a href="/admin/departments" class="nav-item <%= isActive('/admin/departments') %>">
+                    <i data-feather="layers" class="w-5 h-5"></i>
+                    <span>แผนกวิชา</span>
+                </a>
+                <a href="/admin/majors" class="nav-item <%= isActive('/admin/majors') %>">
+                    <i data-feather="book" class="w-5 h-5"></i>
+                    <span>สาขาวิชา</span>
+                </a>
+                <a href="/admin/sections" class="nav-item <%= isActive('/admin/sections') %>">
+                    <i data-feather="grid" class="w-5 h-5"></i>
+                    <span>ห้องเรียน</span>
+                </a>
+                <a href="/admin/companies" class="nav-item <%= isActive('/admin/companies') %>">
+                    <i data-feather="briefcase" class="w-5 h-5"></i>
+                    <span>สถานประกอบการ</span>
+                </a>
+                <a href="/admin/users" class="nav-item <%= isActive('/admin/users') %>">
+                    <i data-feather="users" class="w-5 h-5"></i>
+                    <span>ผู้ใช้งาน</span>
+                </a>
+
+                <% } else if (userRole==='student' ) { %>
+                    <div class="px-3 py-3 text-[10px] font-bold text-white/40 uppercase tracking-[0.2em]">เมนูหลัก</div>
+                    <a href="/student/dashboard" class="nav-item <%= isActive('/student/dashboard') %>">
+                        <i data-feather="home" class="w-5 h-5"></i>
+                        <span>แดชบอร์ด</span>
+                    </a>
+                    <a href="/student/attendance" class="nav-item <%= isActive('/student/attendance') %>">
+                        <i data-feather="map-pin" class="w-5 h-5"></i>
+                        <span>ลงเวลา (GPS)</span>
+                    </a>
+
+                    <div class="px-3 py-3 mt-4 text-[10px] font-bold text-white/40 uppercase tracking-[0.2em]">รายงาน
+                    </div>
+                    <a href="/student/daily-logs" class="nav-item <%= isActive('/student/daily-logs') %>">
+                        <i data-feather="file-text" class="w-5 h-5"></i>
+                        <span>บันทึกรายวัน</span>
+                    </a>
+                    <a href="/student/weekly-reports" class="nav-item <%= isActive('/student/weekly-reports') %>">
+                        <i data-feather="pie-chart" class="w-5 h-5"></i>
+                        <span>รายงานสัปดาห์</span>
+                    </a>
+                    <a href="/student/leave-requests" class="nav-item <%= isActive('/student/leave-requests') %>">
+                        <i data-feather="flag" class="w-5 h-5"></i>
+                        <span>ขอลางาน</span>
+                    </a>
+
+                    <% } else if (userRole==='mentor' ) { %>
+                        <div class="px-3 py-3 text-[10px] font-bold text-white/40 uppercase tracking-[0.2em]">ภาพรวม
+                        </div>
+                        <a href="/mentor/dashboard" class="nav-item <%= isActive('/mentor/dashboard') %>">
+                            <i data-feather="activity" class="w-5 h-5"></i>
+                            <span>แดชบอร์ด</span>
+                        </a>
+                        <a href="/mentor/students" class="nav-item <%= isActive('/mentor/students') %>">
+                            <i data-feather="users" class="w-5 h-5"></i>
+                            <span>นักศึกษา</span>
+                        </a>
+
+                        <div class="px-3 py-3 mt-4 text-[10px] font-bold text-white/40 uppercase tracking-[0.2em]">
+                            การจัดการ</div>
+                        <a href="/mentor/leave-requests" class="nav-item <%= isActive('/mentor/leave-requests') %>">
+                            <i data-feather="check-square" class="w-5 h-5"></i>
+                            <span>อนุมัติใบลา</span>
+                        </a>
+                        <a href="/mentor/evaluations" class="nav-item <%= isActive('/mentor/evaluations') %>">
+                            <i data-feather="star" class="w-5 h-5"></i>
+                            <span>ประเมินผล</span>
+                        </a>
+
+                        <% } else if (userRole==='teacher' ) { %>
+                            <div class="px-3 py-3 text-[10px] font-bold text-white/40 uppercase tracking-[0.2em]">ภาพรวม
+                            </div>
+                            <a href="/teacher/dashboard" class="nav-item <%= isActive('/teacher/dashboard') %>">
+                                <i data-feather="activity" class="w-5 h-5"></i>
+                                <span>แดชบอร์ด</span>
+                            </a>
+                            <a href="/teacher/students" class="nav-item <%= isActive('/teacher/students') %>">
+                                <i data-feather="users" class="w-5 h-5"></i>
+                                <span>นักศึกษา</span>
+                            </a>
+
+                            <div class="px-3 py-3 mt-4 text-[10px] font-bold text-white/40 uppercase tracking-[0.2em]">
+                                นิเทศก์</div>
+                            <a href="/teacher/supervisions" class="nav-item <%= isActive('/teacher/supervisions') %>">
+                                <i data-feather="clipboard" class="w-5 h-5"></i>
+                                <span>บันทึกนิเทศ</span>
+                            </a>
+                            <a href="/teacher/weekly-reports"
+                                class="nav-item <%= isActive('/teacher/weekly-reports') %>">
+                                <i data-feather="file-text" class="w-5 h-5"></i>
+                                <span>ตรวจรายงาน</span>
+                            </a>
+                            <a href="/teacher/evaluations" class="nav-item <%= isActive('/teacher/evaluations') %>">
+                                <i data-feather="award" class="w-5 h-5"></i>
+                                <span>ประเมินผล</span>
+                            </a>
+                            <% } %>
+
+        </nav>
+
+        <!-- User Info & Logout -->
+        <div class="p-4 border-t border-white/10">
+            <div class="flex items-center gap-3 px-3 py-3 mb-3 rounded-xl bg-white/5">
+                <div
+                    class="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-primary-600 font-bold text-lg shadow">
+                    <%= user && user.firstName ? user.firstName.charAt(0) : 'U' %>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-bold text-white truncate">
+                        <%= user && user.firstName ? user.firstName : 'User' %>
+                    </p>
+                    <p class="text-[10px] text-white/50 uppercase tracking-wide">
+                        <%= user && user.role ? user.role : 'Guest' %>
+                    </p>
+                </div>
+            </div>
+            <a href="/auth/logout"
+                class="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-white/10 text-white/80 hover:bg-white hover:text-primary-600 transition-all duration-300 font-semibold text-sm group">
+                <i data-feather="log-out" class="w-4 h-4 group-hover:-translate-x-0.5 transition-transform"></i>
+                <span>ออกจากระบบ</span>
+            </a>
+        </div>
+    </aside>

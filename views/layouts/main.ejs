@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    <%= typeof title !=='undefined' ? title + ' | ' : '' %>Smart Internship
+  </title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/feather-icons"></script>
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+</head>
+
+<body class="bg-slate-50 text-slate-900 font-sans antialiased">
+
+  <!-- Flash Messages -->
+  <% if ((typeof success_msg !=='undefined' && success_msg && success_msg.length> 0) || (typeof error_msg !==
+    'undefined' && error_msg && error_msg.length > 0)) { %>
+    <div id="alertModal"
+      class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-fade-in"
+      onclick="closeModal(event)">
+      <div class="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-8 text-center" onclick="event.stopPropagation()">
+        <% if (typeof success_msg !=='undefined' && success_msg && success_msg.length> 0) { %>
+          <div class="w-16 h-16 rounded-full bg-green-100 mx-auto flex items-center justify-center mb-4 text-green-500">
+            <i data-feather="check-circle" class="w-8 h-8"></i>
+          </div>
+          <h3 class="text-xl font-bold text-slate-900 mb-2">สำเร็จ</h3>
+          <p class="text-slate-500 mb-6">
+            <%= success_msg %>
+          </p>
+          <button onclick="closeModalBtn()"
+            class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-xl transition-colors">ตกลง</button>
+          <% } %>
+            <% if (typeof error_msg !=='undefined' && error_msg && error_msg.length> 0) { %>
+              <div class="w-16 h-16 rounded-full bg-red-100 mx-auto flex items-center justify-center mb-4 text-red-500">
+                <i data-feather="alert-circle" class="w-8 h-8"></i>
+              </div>
+              <h3 class="text-xl font-bold text-slate-900 mb-2">เกิดข้อผิดพลาด</h3>
+              <p class="text-slate-500 mb-6">
+                <%= error_msg %>
+              </p>
+              <button onclick="closeModalBtn()"
+                class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-xl transition-colors">ลองใหม่</button>
+              <% } %>
+      </div>
+    </div>
+    <% } %>
+
+      <!-- Mobile Overlay -->
+      <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+
+      <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <%- include('../partials/sidebar') %>
+
+          <!-- Main Content -->
+          <div class="flex-1 lg:ml-72 flex flex-col min-h-screen">
+
+            <!-- Simple Top Bar -->
+            <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-sm border-b border-slate-100 px-6 py-4">
+              <div class="flex items-center justify-between max-w-7xl mx-auto">
+                <div class="flex items-center gap-4">
+                  <button onclick="toggleSidebar()"
+                    class="lg:hidden p-2 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors">
+                    <i data-feather="menu" class="w-5 h-5"></i>
+                  </button>
+                  <div>
+                    <h1 class="text-xl font-bold text-slate-900">
+                      <%= typeof title !=='undefined' ? title : 'Dashboard' %>
+                    </h1>
+                    <p class="text-xs text-slate-400 hidden sm:block">
+                      <%= new Date().toLocaleDateString('th-TH', { weekday: 'long' , day: 'numeric' , month: 'long' ,
+                        year: 'numeric' }) %>
+                    </p>
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-3">
+                  <!-- Notification -->
+                  <button
+                    class="relative p-2.5 rounded-xl text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition-colors">
+                    <i data-feather="bell" class="w-5 h-5"></i>
+                    <span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full"></span>
+                  </button>
+
+                  <!-- Profile (Mobile) -->
+                  <div
+                    class="lg:hidden w-9 h-9 rounded-lg bg-primary-500 text-white flex items-center justify-center font-bold">
+                    <%= typeof user !=='undefined' && user && user.firstName ? user.firstName.charAt(0) : 'U' %>
+                  </div>
+                </div>
+              </div>
+            </header>
+
+            <!-- Page Content -->
+            <main class="flex-1 p-6">
+              <div class="max-w-7xl mx-auto animate-fade-in">
+                <%- body %>
+              </div>
+            </main>
+
+            <!-- Footer -->
+            <footer class="py-6 text-center text-sm text-slate-400 border-t border-slate-100">
+              © 2024 Smart Internship Tracking System
+            </footer>
+          </div>
+      </div>
+
+      <script src="/js/app.js"></script>
+      <script>
+        feather.replace();
+
+        function closeModal(e) {
+          if (e.target.id === 'alertModal') {
+            document.getElementById('alertModal').remove();
+          }
+        }
+
+        function closeModalBtn() {
+          document.getElementById('alertModal').remove();
+        }
+
+        function toggleSidebar() {
+          const sidebar = document.getElementById('sidebar');
+          const overlay = document.getElementById('sidebarOverlay');
+
+          if (sidebar.classList.contains('-translate-x-full')) {
+            sidebar.classList.remove('-translate-x-full');
+            overlay.classList.remove('hidden');
+          } else {
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+          }
+        }
+
+        function confirmDelete(msg = 'ยืนยันการลบ?') {
+          return confirm(msg);
+        }
+      </script>
+</body>
+
+</html>

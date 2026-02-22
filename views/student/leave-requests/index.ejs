@@ -1,0 +1,59 @@
+<div class="space-y-6">
+    <div class="flex justify-between items-center">
+        <h1 class="text-2xl font-bold text-gray-800">รายการขอลางาน</h1>
+        <a href="/student/leave-requests/create" class="btn btn-primary">➕ ขอลางาน</a>
+    </div>
+
+    <div class="card">
+        <table class="w-full">
+            <thead>
+                <tr class="text-left border-b">
+                    <th class="pb-3 text-gray-600">วันที่ขอ</th>
+                    <th class="pb-3 text-gray-600">ประเภท</th>
+                    <th class="pb-3 text-gray-600">วันที่ลา</th>
+                    <th class="pb-3 text-gray-600">เหตุผล</th>
+                    <th class="pb-3 text-gray-600">สถานะ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (leaveRequests.length===0) { %>
+                    <tr>
+                        <td colspan="5" class="py-8 text-center text-gray-500">ยังไม่มีรายการขอลา</td>
+                    </tr>
+                    <% } %>
+                        <% leaveRequests.forEach(leave=> { %>
+                            <tr class="border-b hover:bg-gray-50">
+                                <td class="py-3 text-sm">
+                                    <%= new Date(leave.createdAt).toLocaleDateString('th-TH') %>
+                                </td>
+                                <td class="py-3">
+                                    <% if (leave.type==='sick' ) { %>
+                                        <span class="status-badge bg-red-100 text-red-700">ลาป่วย</span>
+                                        <% } else { %>
+                                            <span class="status-badge bg-blue-100 text-blue-700">ลากิจ</span>
+                                            <% } %>
+                                </td>
+                                <td class="py-3 text-sm">
+                                    <%= new Date(leave.startDate).toLocaleDateString('th-TH') %>
+                                        <% if (leave.startDate !==leave.endDate) { %>
+                                            - <%= new Date(leave.endDate).toLocaleDateString('th-TH') %>
+                                                <% } %>
+                                </td>
+                                <td class="py-3 text-sm text-gray-600 max-w-xs truncate">
+                                    <%= leave.reason %>
+                                </td>
+                                <td class="py-3">
+                                    <% if (leave.status==='pending' ) { %>
+                                        <span class="status-badge status-pending">รออนุมัติ</span>
+                                        <% } else if (leave.status==='approved' ) { %>
+                                            <span class="status-badge status-success">อนุมัติ</span>
+                                            <% } else { %>
+                                                <span class="status-badge bg-red-100 text-red-700">ไม่อนุมัติ</span>
+                                                <% } %>
+                                </td>
+                            </tr>
+                            <% }); %>
+            </tbody>
+        </table>
+    </div>
+</div>

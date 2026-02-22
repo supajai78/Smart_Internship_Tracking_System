@@ -1,0 +1,95 @@
+<div class="space-y-6">
+    <!-- Header -->
+    <div class="flex items-center gap-4">
+        <a href="/admin/sections"
+            class="p-2 rounded-lg bg-white border border-slate-200 text-slate-500 hover:text-slate-700 transition-colors">
+            <i data-feather="arrow-left" class="w-5 h-5"></i>
+        </a>
+        <div>
+            <h1 class="text-2xl font-bold text-slate-900">แก้ไขห้องเรียน</h1>
+            <p class="text-sm text-slate-500">
+                <%= section.name %>
+            </p>
+        </div>
+    </div>
+
+    <!-- Form -->
+    <div class="card max-w-2xl">
+        <form action="/admin/sections/<%= section._id %>" method="POST" class="space-y-5">
+
+            <!-- ปีการศึกษา -->
+            <div>
+                <label class="form-label">ปีการศึกษา *</label>
+                <select name="academicYear" class="input" required>
+                    <% academicYears.forEach(y=> { %>
+                        <option value="<%= y._id %>" <%=section.academicYear &&
+                            section.academicYear.toString()===y._id.toString() ? 'selected' : '' %>><%= y.name %>
+                        </option>
+                        <% }); %>
+                </select>
+            </div>
+
+            <!-- สาขาวิชา -->
+            <div>
+                <label class="form-label">สาขาวิชา *</label>
+                <select name="major" class="input" required>
+                    <% majors.forEach(m=> { %>
+                        <option value="<%= m._id %>" <%=section.major && section.major.toString()===m._id.toString()
+                            ? 'selected' : '' %>><%= m.name %>
+                                <% if(m.department) { %>(<%= m.department.name %>)<% } %>
+                        </option>
+                        <% }); %>
+                </select>
+            </div>
+
+            <!-- ระดับชั้น -->
+            <div>
+                <label class="form-label">ระดับชั้น</label>
+                <select name="level" class="input">
+                    <option value="">-- ไม่ระบุ --</option>
+                    <% levels.forEach(l=> { %>
+                        <option value="<%= l._id %>" <%=section.level && section.level.toString()===l._id.toString()
+                            ? 'selected' : '' %>><%= l.name %>
+                        </option>
+                        <% }); %>
+                </select>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <!-- รหัสห้อง -->
+                <div>
+                    <label class="form-label">รหัสห้อง *</label>
+                    <input type="text" name="code" class="input" value="<%= section.code %>" required>
+                </div>
+
+                <!-- ชื่อห้อง -->
+                <div>
+                    <label class="form-label">ชื่อห้อง *</label>
+                    <input type="text" name="name" class="input" value="<%= section.name %>" required>
+                </div>
+            </div>
+
+            <!-- รายละเอียด -->
+            <div>
+                <label class="form-label">รายละเอียดเพิ่มเติม</label>
+                <textarea name="description" class="input" rows="2"><%= section.description || '' %></textarea>
+            </div>
+
+            <!-- สถานะ -->
+            <div class="flex items-center gap-3 p-4 bg-slate-50 rounded-xl">
+                <input type="checkbox" name="isActive" id="isActive" class="w-5 h-5 rounded border-slate-300"
+                    <%=section.isActive ? 'checked' : '' %>>
+                <label for="isActive" class="font-medium text-slate-700">เปิดใช้งาน</label>
+            </div>
+
+            <!-- Buttons -->
+            <div class="flex gap-3 pt-4 border-t border-slate-100">
+                <button type="submit" class="btn btn-primary">
+                    <i data-feather="save" class="w-4 h-4"></i>
+                    บันทึก
+                </button>
+                <a href="/admin/sections" class="btn btn-secondary">ยกเลิก</a>
+            </div>
+        </form>
+    </div>
+</div>

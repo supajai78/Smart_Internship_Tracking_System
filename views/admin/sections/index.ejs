@@ -1,0 +1,149 @@
+<div class="space-y-6">
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+            <h1 class="text-2xl font-bold text-slate-900">จัดการห้องเรียน</h1>
+            <p class="text-slate-500 text-sm">จัดกลุ่มนักศึกษาตามห้อง/Section • แบ่งตามแผนกและสาขา</p>
+        </div>
+        <a href="/admin/sections/create" class="btn btn-primary">
+            <i data-feather="plus" class="w-4 h-4"></i>
+            เพิ่มห้องเรียน
+        </a>
+    </div>
+
+    <% if (sections.length===0) { %>
+        <!-- Empty State -->
+        <div class="card p-12 text-center">
+            <div
+                class="w-16 h-16 rounded-full bg-slate-100 mx-auto flex items-center justify-center mb-4 text-slate-400">
+                <i data-feather="users" class="w-8 h-8"></i>
+            </div>
+            <p class="text-slate-500 font-medium mb-2">ยังไม่มีห้องเรียน</p>
+            <p class="text-slate-400 text-sm mb-4">เริ่มต้นสร้างห้องเรียนเพื่อจัดกลุ่มนักศึกษา</p>
+            <a href="/admin/sections/create" class="btn btn-primary">เพิ่มห้องเรียนแรก</a>
+        </div>
+        <% } else { %>
+            <% // Group sections by Department> Major
+                const grouped = {};
+                sections.forEach(function(section) {
+                const deptName = section.major && section.major.department ? section.major.department.name :
+                'ไม่ระบุแผนก';
+                const majorName = section.major ? section.major.name : 'ไม่ระบุสาขา';
+
+                if (!grouped[deptName]) {
+                grouped[deptName] = {};
+                }
+                if (!grouped[deptName][majorName]) {
+                grouped[deptName][majorName] = [];
+                }
+                grouped[deptName][majorName].push(section);
+                });
+                %>
+
+                <% Object.keys(grouped).forEach(function(deptName) { %>
+                    <!-- Department Group -->
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-3">
+                            <div
+                                class="w-10 h-10 rounded-xl bg-primary-100 flex items-center justify-center text-primary-600">
+                                <i data-feather="grid" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-lg font-bold text-slate-900">
+                                    <%= deptName %>
+                                </h2>
+                                <p class="text-sm text-slate-500">แผนกวิชา</p>
+                            </div>
+                        </div>
+
+                        <% Object.keys(grouped[deptName]).forEach(function(majorName) { %>
+                            <!-- Major Group -->
+                            <div class="card overflow-hidden ml-4">
+                                <div class="bg-slate-50 px-4 py-3 border-b border-slate-100">
+                                    <div class="flex items-center gap-2">
+                                        <i data-feather="bookmark" class="w-4 h-4 text-slate-400"></i>
+                                        <span class="font-semibold text-slate-700">
+                                            <%= majorName %>
+                                        </span>
+                                        <span class="badge bg-slate-200 text-slate-600 ml-2">
+                                            <%= grouped[deptName][majorName].length %> ห้อง
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="divide-y divide-slate-100">
+                                    <% grouped[deptName][majorName].forEach(function(section) { %>
+                                        <div
+                                            class="flex items-center justify-between px-4 py-3 hover:bg-slate-50 transition-colors group">
+                                            <a href="/admin/sections/<%= section._id %>/view"
+                                                class="flex items-center gap-4 flex-1">
+                                                <div
+                                                    class="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center text-white font-bold text-sm shadow-md">
+                                                    <%= section.code %>
+                                                </div>
+                                                <div>
+                                                    <h3
+                                                        class="font-semibold text-slate-900 group-hover:text-primary-600 transition-colors">
+                                                        <%= section.name %>
+                                                    </h3>
+                                                    <div class="flex items-center gap-3 text-sm text-slate-500">
+                                                        <% if (section.academicYear) { %>
+                                                            <span class="flex items-center gap-1">
+                                                                <i data-feather="calendar" class="w-3 h-3"></i>
+                                                                <%= section.academicYear.name %>
+                                                            </span>
+                                                            <% } %>
+                                                                <% if (section.level) { %>
+                                                                    <span class="flex items-center gap-1">
+                                                                        <i data-feather="layers" class="w-3 h-3"></i>
+                                                                        <%= section.level.name %>
+                                                                    </span>
+                                                                    <% } %>
+                                                                        <span class="flex items-center gap-1">
+                                                                            <i data-feather="users" class="w-3 h-3"></i>
+                                                                            <span id="count-<%= section._id %>">-</span>
+                                                                            คน
+                                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </a>
+
+                                            <div class="flex items-center gap-1">
+                                                <span
+                                                    class="badge <%= section.isActive ? 'badge-success' : 'bg-slate-100 text-slate-500' %> mr-2">
+                                                    <%= section.isActive ? 'ใช้งาน' : 'ปิด' %>
+                                                </span>
+                                                <a href="/admin/sections/<%= section._id %>/view"
+                                                    class="p-2 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition-colors"
+                                                    title="ดูรายชื่อ">
+                                                    <i data-feather="eye" class="w-4 h-4"></i>
+                                                </a>
+                                                <a href="/admin/sections/<%= section._id %>/edit"
+                                                    class="p-2 rounded-lg text-slate-400 hover:text-amber-600 hover:bg-amber-50 transition-colors"
+                                                    title="แก้ไข">
+                                                    <i data-feather="edit-2" class="w-4 h-4"></i>
+                                                </a>
+                                                <form action="/admin/sections/<%= section._id %>/delete" method="POST"
+                                                    class="inline" onsubmit="return confirmDelete()">
+                                                    <button type="submit"
+                                                        class="p-2 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors"
+                                                        title="ลบ">
+                                                        <i data-feather="trash-2" class="w-4 h-4"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <% }); %>
+                                </div>
+                            </div>
+                            <% }); %>
+                    </div>
+                    <% }); %>
+                        <% } %>
+</div>
+
+<script>
+    function confirmDelete() {
+        return confirm('คุณต้องการลบห้องเรียนนี้หรือไม่?');
+    }
+</script>

@@ -1,0 +1,56 @@
+<div class="space-y-6">
+    <div class="flex justify-between items-center">
+        <h1 class="text-2xl font-bold text-gray-800">รายงานรายสัปดาห์</h1>
+    </div>
+
+    <div class="card">
+        <% if (weeklyReports.length===0) { %>
+            <div class="text-center py-12">
+                <span class="text-4xl mb-4 block">📊</span>
+                <p class="text-gray-500">ยังไม่มีรายงานรายสัปดาห์</p>
+                <p class="text-sm text-gray-400 mt-2">รายงานจะถูกสร้างอัตโนมัติจากบันทึกรายวัน</p>
+            </div>
+            <% } else { %>
+                <table class="w-full">
+                    <thead>
+                        <tr class="text-left border-b">
+                            <th class="pb-3 text-gray-600">สัปดาห์ที่</th>
+                            <th class="pb-3 text-gray-600">ช่วงวันที่</th>
+                            <th class="pb-3 text-gray-600">สถานะ</th>
+                            <th class="pb-3 text-gray-600">คะแนน</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% weeklyReports.forEach(report=> { %>
+                            <tr class="border-b hover:bg-gray-50">
+                                <td class="py-3 font-medium">สัปดาห์ที่ <%= report.weekNumber %>
+                                </td>
+                                <td class="py-3 text-sm">
+                                    <%= new Date(report.startDate).toLocaleDateString('th-TH') %> -
+                                        <%= new Date(report.endDate).toLocaleDateString('th-TH') %>
+                                </td>
+                                <td class="py-3">
+                                    <% if (report.status==='draft' ) { %>
+                                        <span class="status-badge status-pending">ร่าง</span>
+                                        <% } else if (report.status==='submitted' ) { %>
+                                            <span class="status-badge bg-blue-100 text-blue-700">ส่งแล้ว</span>
+                                            <% } else { %>
+                                                <span class="status-badge status-success">ตรวจแล้ว</span>
+                                                <% } %>
+                                </td>
+                                <td class="py-3">
+                                    <% if (report.score) { %>
+                                        <span class="font-bold text-primary-600">
+                                            <%= report.score %>/100
+                                        </span>
+                                        <% } else { %>
+                                            <span class="text-gray-400">-</span>
+                                            <% } %>
+                                </td>
+                            </tr>
+                            <% }); %>
+                    </tbody>
+                </table>
+                <% } %>
+    </div>
+</div>

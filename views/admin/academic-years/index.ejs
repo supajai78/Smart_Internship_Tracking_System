@@ -1,0 +1,58 @@
+<div class="space-y-6">
+    <div class="flex justify-between items-center">
+        <h1 class="text-2xl font-bold text-gray-800">จัดการปีการศึกษา</h1>
+        <a href="/admin/academic-years/create" class="btn btn-primary">
+            ➕ เพิ่มปีการศึกษา
+        </a>
+    </div>
+
+    <div class="card">
+        <table class="w-full">
+            <thead>
+                <tr class="text-left border-b">
+                    <th class="pb-3 text-gray-600">ปีการศึกษา</th>
+                    <th class="pb-3 text-gray-600">วันเริ่มต้น</th>
+                    <th class="pb-3 text-gray-600">วันสิ้นสุด</th>
+                    <th class="pb-3 text-gray-600">สถานะ</th>
+                    <th class="pb-3 text-gray-600 text-right">จัดการ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (academicYears.length===0) { %>
+                    <tr>
+                        <td colspan="5" class="py-8 text-center text-gray-500">ยังไม่มีข้อมูลปีการศึกษา</td>
+                    </tr>
+                    <% } %>
+                        <% academicYears.forEach(item=> { %>
+                            <tr class="border-b hover:bg-gray-50">
+                                <td class="py-3 font-medium">
+                                    <%= item.name %>
+                                </td>
+                                <td class="py-3">
+                                    <%= new Date(item.startDate).toLocaleDateString('th-TH') %>
+                                </td>
+                                <td class="py-3">
+                                    <%= new Date(item.endDate).toLocaleDateString('th-TH') %>
+                                </td>
+                                <td class="py-3">
+                                    <% if (item.isActive) { %>
+                                        <span class="status-badge status-success">ใช้งานอยู่</span>
+                                        <% } else { %>
+                                            <span class="status-badge status-pending">ไม่ใช้งาน</span>
+                                            <% } %>
+                                </td>
+                                <td class="py-3 text-right">
+                                    <a href="/admin/academic-years/<%= item._id %>/edit"
+                                        class="text-primary-600 hover:text-primary-800 mr-3">แก้ไข</a>
+                                    <form action="/admin/academic-years/<%= item._id %>/delete" method="POST"
+                                        class="inline"
+                                        onsubmit="return confirmDelete('คุณแน่ใจหรือไม่ที่จะลบปีการศึกษานี้?')">
+                                        <button type="submit" class="text-danger-500 hover:text-danger-700">ลบ</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <% }); %>
+            </tbody>
+        </table>
+    </div>
+</div>

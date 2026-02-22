@@ -1,0 +1,52 @@
+<header class="navbar">
+    <div class="flex items-center justify-between gap-4">
+        <!-- Mobile Menu Button -->
+        <button onclick="toggleSidebar()" class="mobile-menu-btn">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                </path>
+            </svg>
+        </button>
+
+        <!-- Title -->
+        <div class="flex-1">
+            <h1 class="text-lg lg:text-xl font-bold text-gray-900">
+                <%= typeof title !=='undefined' ? title : 'Dashboard' %>
+            </h1>
+            <p class="text-xs lg:text-sm text-gray-500 hidden sm:block">
+                <%= new Date().toLocaleDateString('th-TH', { weekday: 'long' , year: 'numeric' , month: 'long' ,
+                    day: 'numeric' }) %>
+            </p>
+        </div>
+
+        <div class="flex items-center gap-2 lg:gap-3">
+            <!-- Notifications -->
+            <button class="btn-icon bg-gray-100 text-gray-600 hover:bg-gray-200">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9">
+                    </path>
+                </svg>
+            </button>
+
+            <!-- Logout -->
+            <a href="/auth/logout" class="btn btn-primary btn-sm hidden sm:flex">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
+                    </path>
+                </svg>
+                <span>ออก</span>
+            </a>
+
+            <!-- Mobile Logout -->
+            <a href="/auth/logout" class="btn-icon bg-primary-100 text-primary-600 hover:bg-primary-200 sm:hidden">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
+                    </path>
+                </svg>
+            </a>
+        </div>
+    </div>
+</header>

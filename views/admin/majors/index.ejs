@@ -1,0 +1,87 @@
+<div class="space-y-6 animate-fade-in">
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+            <h1 class="text-2xl font-bold text-surface-900">จัดการสาขาวิชา</h1>
+            <p class="text-surface-500 text-sm">สาขาวิชาทั้งหมดในระบบ</p>
+        </div>
+        <a href="/admin/majors/create" class="btn btn-primary">
+            <i data-feather="plus" class="w-4 h-4"></i>
+            เพิ่มสาขาวิชา
+        </a>
+    </div>
+
+    <!-- Table Card -->
+    <div class="table-container">
+        <table class="w-full">
+            <thead>
+                <tr>
+                    <th class="table-head">รหัส</th>
+                    <th class="table-head">ชื่อสาขาวิชา</th>
+                    <th class="table-head">แผนกวิชา</th>
+                    <th class="table-head">สถานะ</th>
+                    <th class="table-head text-right">จัดการ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (majors.length===0) { %>
+                    <tr>
+                        <td colspan="5" class="px-6 py-12 text-center">
+                            <div
+                                class="w-16 h-16 rounded-full bg-surface-100 mx-auto flex items-center justify-center mb-4 text-surface-400">
+                                <i data-feather="book" class="w-8 h-8"></i>
+                            </div>
+                            <p class="text-surface-500 font-medium">ยังไม่มีสาขาวิชา</p>
+                            <a href="/admin/majors/create" class="btn btn-primary btn-sm mt-4">เพิ่มสาขาวิชาแรก</a>
+                        </td>
+                    </tr>
+                    <% } else { %>
+                        <% majors.forEach(item=> { %>
+                            <tr class="table-row">
+                                <td class="px-6 py-4">
+                                    <span class="font-mono text-sm bg-surface-100 px-2 py-1 rounded-lg">
+                                        <%= item.code %>
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 font-medium text-surface-900">
+                                    <%= item.name %>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <% if (item.department) { %>
+                                        <a href="/admin/departments/<%= item.department._id %>/view"
+                                            class="inline-flex items-center gap-2 px-3 py-1.5 bg-primary-50 text-primary-700 rounded-xl text-sm font-medium hover:bg-primary-100 transition-colors">
+                                            <i data-feather="layers" class="w-3 h-3"></i>
+                                            <%= item.department.name %>
+                                        </a>
+                                        <% } else { %>
+                                            <span class="text-surface-400">-</span>
+                                            <% } %>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span
+                                        class="badge-pill <%= item.isActive ? 'bg-green-100 text-green-700' : 'bg-surface-100 text-surface-500' %>">
+                                        <%= item.isActive ? 'ใช้งาน' : 'ไม่ใช้งาน' %>
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <div class="flex items-center justify-end gap-1">
+                                        <a href="/admin/majors/<%= item._id %>/edit"
+                                            class="p-2 rounded-xl text-surface-400 hover:text-primary-600 hover:bg-primary-50 transition-colors">
+                                            <i data-feather="edit-2" class="w-4 h-4"></i>
+                                        </a>
+                                        <form action="/admin/majors/<%= item._id %>/delete" method="POST" class="inline"
+                                            onsubmit="return confirmDelete()">
+                                            <button type="submit"
+                                                class="p-2 rounded-xl text-surface-400 hover:text-red-600 hover:bg-red-50 transition-colors">
+                                                <i data-feather="trash-2" class="w-4 h-4"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            <% }); %>
+                                <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>

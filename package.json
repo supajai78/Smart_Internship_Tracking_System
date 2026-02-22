@@ -1,0 +1,40 @@
+{
+  "name": "smart-internship-tracking",
+  "version": "1.0.0",
+  "description": "ระบบติดตามการฝึกงานของนักศึกษา ปวช./ปวส. วิทยาลัยเทคนิคอุบลราชธานี",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "seed": "node utils/seeder.js",
+    "tailwind": "npx tailwindcss -i ./src/css/input.css -o ./public/css/style.css --watch",
+    "build:css": "npx tailwindcss -i ./src/css/input.css -o ./public/css/style.css --minify"
+  },
+  "keywords": [
+    "internship",
+    "tracking",
+    "student",
+    "vocational"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "connect-flash": "^0.1.1",
+    "connect-mongo": "^5.1.0",
+    "dotenv": "^16.3.1",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "express-ejs-layouts": "^2.5.1",
+    "express-session": "^1.17.3",
+    "express-validator": "^7.0.1",
+    "mongoose": "^8.0.3",
+    "multer": "^1.4.5-lts.1",
+    "qrcode": "^1.5.3",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2",
+    "tailwindcss": "^3.4.0"
+  }
+}

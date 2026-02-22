@@ -1,0 +1,26 @@
+<div class="space-y-6">
+    <div class="flex items-center gap-4">
+        <a href="/admin/levels" class="text-gray-500 hover:text-gray-700">← กลับ</a>
+        <h1 class="text-2xl font-bold text-gray-800">แก้ไขระดับชั้น</h1>
+    </div>
+    <div class="card max-w-2xl">
+        <form action="/admin/levels/<%= level._id %>" method="POST" class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">รหัสระดับ</label>
+                <input type="text" name="code" class="input" value="<%= level.code %>" required>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">ชื่อระดับชั้น</label>
+                <input type="text" name="name" class="input" value="<%= level.name %>" required>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">รายละเอียด</label>
+                <textarea name="description" class="input" rows="3"><%= level.description || '' %></textarea>
+            </div>
+            <div class="flex gap-3 pt-4">
+                <button type="submit" class="btn btn-primary">บันทึก</button>
+                <a href="/admin/levels" class="btn btn-outline">ยกเลิก</a>
+            </div>
+        </form>
+    </div>
+</div>

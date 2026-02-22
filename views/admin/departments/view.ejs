@@ -1,0 +1,88 @@
+<div class="space-y-6 animate-fade-in">
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div class="flex items-center gap-4">
+            <a href="/admin/departments"
+                class="p-2 rounded-xl bg-white border border-surface-200 text-surface-500 hover:text-primary-600 hover:border-primary-200 transition-all">
+                <i data-feather="arrow-left" class="w-5 h-5"></i>
+            </a>
+            <div>
+                <span class="text-xs font-bold text-primary-600 bg-primary-50 px-2 py-1 rounded-lg">
+                    <%= department.code %>
+                </span>
+                <h1 class="text-2xl font-bold text-surface-900 mt-1">
+                    <%= department.name %>
+                </h1>
+            </div>
+        </div>
+        <a href="/admin/majors/create?department=<%= department._id %>" class="btn btn-primary">
+            <i data-feather="plus" class="w-4 h-4"></i>
+            เพิ่มสาขาวิชา
+        </a>
+    </div>
+
+    <!-- Stats -->
+    <div class="widget max-w-xs">
+        <div>
+            <p class="text-sm font-bold text-surface-500 uppercase tracking-widest mb-1">จำนวนสาขาวิชา</p>
+            <p class="text-3xl font-bold text-surface-900">
+                <%= majors.length %>
+            </p>
+        </div>
+        <div class="w-12 h-12 rounded-2xl bg-primary-100 text-primary-600 flex items-center justify-center">
+            <i data-feather="book" class="w-6 h-6"></i>
+        </div>
+    </div>
+
+    <!-- Majors List -->
+    <div class="card">
+        <h3 class="text-lg font-bold text-surface-900 mb-6 flex items-center gap-2">
+            <i data-feather="book" class="w-5 h-5 text-primary-500"></i>
+            สาขาวิชาในแผนกนี้
+        </h3>
+
+        <% if (majors.length===0) { %>
+            <div class="text-center py-12 border-2 border-dashed border-surface-200 rounded-2xl">
+                <div
+                    class="w-16 h-16 rounded-full bg-surface-100 mx-auto flex items-center justify-center mb-4 text-surface-400">
+                    <i data-feather="book-open" class="w-8 h-8"></i>
+                </div>
+                <p class="text-surface-500 font-medium mb-4">ยังไม่มีสาขาวิชาในแผนกนี้</p>
+                <a href="/admin/majors/create?department=<%= department._id %>"
+                    class="btn btn-primary btn-sm">เพิ่มสาขาวิชาแรก</a>
+            </div>
+            <% } else { %>
+                <div class="grid gap-3">
+                    <% majors.forEach(m=> { %>
+                        <div
+                            class="flex items-center gap-4 p-4 rounded-2xl bg-surface-50 border border-surface-100 hover:border-primary-200 hover:bg-white transition-all group">
+                            <div
+                                class="w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center text-primary-600 font-bold">
+                                <%= m.code %>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-surface-900 group-hover:text-primary-600 transition-colors">
+                                    <%= m.name %>
+                                </h4>
+                                <% if (m.description) { %>
+                                    <p class="text-sm text-surface-500 truncate">
+                                        <%= m.description %>
+                                    </p>
+                                    <% } %>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span
+                                    class="badge-pill <%= m.isActive ? 'bg-green-100 text-green-700' : 'bg-surface-100 text-surface-500' %>">
+                                    <%= m.isActive ? 'ใช้งาน' : 'ไม่ใช้งาน' %>
+                                </span>
+                                <a href="/admin/majors/<%= m._id %>/edit"
+                                    class="p-2 rounded-xl text-surface-400 hover:text-primary-600 hover:bg-primary-50 transition-colors">
+                                    <i data-feather="edit-2" class="w-4 h-4"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <% }); %>
+                </div>
+                <% } %>
+    </div>
+</div>

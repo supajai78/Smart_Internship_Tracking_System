@@ -1,0 +1,46 @@
+<div class="space-y-6">
+    <div class="flex justify-between items-center">
+        <h1 class="text-2xl font-bold text-gray-800">บันทึกงานรายวัน</h1>
+        <a href="/student/daily-logs/create" class="btn btn-primary">➕ เพิ่มบันทึก</a>
+    </div>
+
+    <div class="grid gap-4">
+        <% if (dailyLogs.length===0) { %>
+            <div class="card text-center py-12">
+                <span class="text-4xl mb-4 block">📝</span>
+                <p class="text-gray-500">ยังไม่มีบันทึกงาน</p>
+                <a href="/student/daily-logs/create" class="btn btn-primary mt-4">เริ่มบันทึกงานวันนี้</a>
+            </div>
+            <% } %>
+
+                <% dailyLogs.forEach(log=> { %>
+                    <div class="card">
+                        <div class="flex justify-between items-start">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-lg bg-primary-100 flex items-center justify-center">
+                                    <span class="text-lg font-bold text-primary-600">
+                                        <%= new Date(log.date).getDate() %>
+                                    </span>
+                                </div>
+                                <div>
+                                    <p class="font-medium text-gray-800">
+                                        <%= new Date(log.date).toLocaleDateString('th-TH', { weekday: 'long' ,
+                                            year: 'numeric' , month: 'long' , day: 'numeric' }) %>
+                                    </p>
+                                    <p class="text-sm text-gray-500">
+                                        <%= log.hoursWorked || 8 %> ชั่วโมง
+                                    </p>
+                                </div>
+                            </div>
+                            <a href="/student/daily-logs/<%= log._id %>/edit"
+                                class="text-primary-600 hover:text-primary-800 text-sm">แก้ไข</a>
+                        </div>
+                        <div class="mt-4 pt-4 border-t">
+                            <p class="text-gray-700 whitespace-pre-wrap">
+                                <%= log.workDescription %>
+                            </p>
+                        </div>
+                    </div>
+                    <% }); %>
+    </div>
+</div>

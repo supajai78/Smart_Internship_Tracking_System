@@ -1,0 +1,126 @@
+<div class="space-y-6">
+    <div class="flex items-center gap-4">
+        <a href="/teacher/students" class="text-gray-500 hover:text-gray-700">← กลับ</a>
+        <h1 class="text-2xl font-bold text-gray-800">ข้อมูลนักศึกษา</h1>
+    </div>
+
+    <!-- Student Info -->
+    <div class="card">
+        <div class="flex items-center gap-4 mb-6">
+            <div
+                class="w-16 h-16 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 font-bold text-2xl">
+                <%= student.firstName.charAt(0) %>
+            </div>
+            <div>
+                <h2 class="text-xl font-bold">
+                    <%= student.firstName %>
+                        <%= student.lastName %>
+                </h2>
+                <p class="text-gray-500">
+                    <%= student.studentId || '' %>
+                </p>
+            </div>
+            <div class="ml-auto">
+                <a href="/teacher/evaluations/<%= student._id %>/create" class="btn btn-primary">⭐ ประเมินนักศึกษา</a>
+            </div>
+        </div>
+
+        <div class="grid md:grid-cols-4 gap-4">
+            <div>
+                <p class="text-sm text-gray-500">สาขาวิชา</p>
+                <p class="font-medium">
+                    <%= student.major ? student.major.name : '-' %>
+                </p>
+            </div>
+            <div>
+                <p class="text-sm text-gray-500">ระดับชั้น</p>
+                <p class="font-medium">
+                    <%= student.level ? student.level.name : '-' %>
+                </p>
+            </div>
+            <div>
+                <p class="text-sm text-gray-500">สถานประกอบการ</p>
+                <p class="font-medium">
+                    <%= student.company ? student.company.name : '-' %>
+                </p>
+            </div>
+            <div>
+                <p class="text-sm text-gray-500">วันเข้างานรวม</p>
+                <p class="font-medium text-green-600">
+                    <%= totalAttendance %> วัน
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="grid md:grid-cols-2 gap-6">
+        <!-- Attendance -->
+        <div class="card">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">📅 ประวัติการเข้างาน</h3>
+            <div class="max-h-64 overflow-y-auto">
+                <% if (attendances.length===0) { %>
+                    <p class="text-gray-500 text-center py-4">ยังไม่มีประวัติ</p>
+                    <% } else { %>
+                        <% attendances.slice(0, 10).forEach(a=> { %>
+                            <div class="flex justify-between py-2 border-b">
+                                <span>
+                                    <%= new Date(a.date).toLocaleDateString('th-TH') %>
+                                </span>
+                                <span
+                                    class="<%= a.status === 'present' ? 'text-green-600' : a.status === 'late' ? 'text-yellow-600' : 'text-red-600' %>">
+                                    <%= a.status==='present' ? 'เข้างาน' : a.status==='late' ? 'สาย' :
+                                        a.status==='leave' ? 'ลา' : 'ขาด' %>
+                                </span>
+                            </div>
+                            <% }); %>
+                                <% } %>
+            </div>
+        </div>
+
+        <!-- Evaluations -->
+        <div class="card">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">⭐ ผลการประเมิน</h3>
+            <% if (evaluations.length===0) { %>
+                <p class="text-gray-500 text-center py-4">ยังไม่มีการประเมิน</p>
+                <% } else { %>
+                    <% evaluations.forEach(e=> { %>
+                        <div class="p-3 bg-gray-50 rounded-lg mb-2">
+                            <div class="flex justify-between">
+                                <span class="font-medium">
+                                    <%= e.evaluatorRole==='mentor' ? 'พี่เลี้ยง' : 'ครูนิเทศก์' %>
+                                </span>
+                                <span class="font-bold text-primary-600">
+                                    <%= e.totalScore %>/<%= e.scores.length * 20 %>
+                                </span>
+                            </div>
+                            <p class="text-sm text-gray-500">
+                                <%= new Date(e.createdAt).toLocaleDateString('th-TH') %>
+                            </p>
+                        </div>
+                        <% }); %>
+                            <% } %>
+        </div>
+    </div>
+
+    <!-- Daily Logs -->
+    <div class="card">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4">📝 บันทึกงานล่าสุด</h3>
+        <% if (dailyLogs.length===0) { %>
+            <p class="text-gray-500 text-center py-4">ยังไม่มีบันทึก</p>
+            <% } else { %>
+                <div class="space-y-4">
+                    <% dailyLogs.forEach(log=> { %>
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <p class="text-sm text-gray-500 mb-2">
+                                <%= new Date(log.date).toLocaleDateString('th-TH') %>
+                            </p>
+                            <p class="text-gray-700">
+                                <%= log.workDescription %>
+                            </p>
+                        </div>
+                        <% }); %>
+                </div>
+                <% } %>
+    </div>
+</div>
