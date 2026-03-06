@@ -62,12 +62,7 @@ export default function Sidebar({ collapsed, onToggle }) {
     };
 
     return (
-        <aside className={`fixed inset-y-0 left-0 z-30 flex flex-col transition-all duration-300 ${collapsed ? 'w-20' : 'w-64'}`}
-            style={{
-                background: 'linear-gradient(180deg, #0f0f23 0%, #13132b 30%, #0d0e1a 100%)',
-                borderRight: '1px solid rgba(109, 62, 242, 0.15)',
-                boxShadow: '4px 0 30px rgba(109, 62, 242, 0.05)'
-            }}>
+        <aside className={`fixed inset-y-0 left-0 z-30 flex flex-col transition-all duration-300 glass-sidebar shadow-2xl ${collapsed ? 'w-20' : 'w-64'}`}>
 
             {/* Logo */}
             <div className="flex items-center gap-3 px-5 py-6" style={{ borderBottom: '1px solid rgba(109, 62, 242, 0.12)' }}>
@@ -100,15 +95,16 @@ export default function Sidebar({ collapsed, onToggle }) {
                             key={item.path}
                             to={item.path}
                             className={({ isActive }) =>
-                                `flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 group ${collapsed ? 'justify-center' : ''}`
+                                `flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 group ${collapsed ? 'justify-center' : ''}`
                             }
                             style={({ isActive }) => isActive ? {
-                                background: 'linear-gradient(135deg, rgba(109, 62, 242, 0.25), rgba(6, 182, 212, 0.1))',
+                                background: 'linear-gradient(135deg, rgba(109, 62, 242, 0.8), rgba(6, 182, 212, 0.6))',
                                 color: '#fff',
-                                boxShadow: '0 0 20px rgba(109, 62, 242, 0.15), inset 0 1px 0 rgba(255,255,255,0.05)',
-                                border: '1px solid rgba(109, 62, 242, 0.2)'
+                                boxShadow: '0 4px 15px rgba(109, 62, 242, 0.4), inset 0 2px 4px rgba(255,255,255,0.3), inset 0 -2px 4px rgba(0,0,0,0.2)',
+                                border: '1px solid rgba(255, 255, 255, 0.2)',
+                                transform: 'translateY(-1px)'
                             } : {
-                                color: '#8b90b0',
+                                color: '#a3a8c4',
                                 background: 'transparent',
                                 border: '1px solid transparent'
                             }}

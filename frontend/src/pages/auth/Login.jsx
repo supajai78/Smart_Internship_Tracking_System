@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { LogIn, Eye, EyeOff, Rocket } from 'lucide-react';
+import { Rocket, GraduationCap, Building2, ClipboardCheck, BarChart3, ShieldCheck, Users } from 'lucide-react';
 
 export default function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const { login } = useAuth();
@@ -41,180 +40,192 @@ export default function Login() {
         }
     };
 
-    return (
-        <div className="min-h-screen flex" style={{ background: '#0a0b14' }}>
-            {/* Left - Space Branding */}
-            <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden"
-                style={{ background: 'linear-gradient(135deg, #0d0e1a 0%, #13132b 40%, #1a0f30 100%)' }}>
-                {/* Nebula effects */}
-                <div className="absolute inset-0">
-                    <div className="absolute top-20 left-20 w-72 h-72 rounded-full blur-3xl" style={{ background: 'rgba(109, 62, 242, 0.15)' }} />
-                    <div className="absolute bottom-20 right-20 w-96 h-96 rounded-full blur-3xl" style={{ background: 'rgba(6, 182, 212, 0.1)' }} />
-                    <div className="absolute top-1/2 left-1/3 w-48 h-48 rounded-full blur-2xl" style={{ background: 'rgba(109, 62, 242, 0.08)' }} />
-                    {/* Stars */}
-                    {[...Array(30)].map((_, i) => (
-                        <div key={i} className="absolute rounded-full animate-twinkle"
-                            style={{
-                                width: `${Math.random() * 2 + 1}px`,
-                                height: `${Math.random() * 2 + 1}px`,
-                                background: 'white',
-                                top: `${Math.random() * 100}%`,
-                                left: `${Math.random() * 100}%`,
-                                animationDelay: `${Math.random() * 3}s`,
-                                opacity: Math.random() * 0.5 + 0.2
-                            }} />
-                    ))}
-                </div>
+    const features = [
+        { icon: GraduationCap, title: 'ติดตามนักศึกษา', desc: 'ติดตามสถานะการฝึกงานแบบเรียลไทม์' },
+        { icon: Building2, title: 'จัดการสถานประกอบการ', desc: 'เชื่อมต่อกับบริษัทคู่สัญญา MOU' },
+        { icon: ClipboardCheck, title: 'บันทึกกิจกรรม', desc: 'ระบบบันทึกรายวัน รายสัปดาห์ อัตโนมัติ' },
+        { icon: BarChart3, title: 'รายงานอัจฉริยะ', desc: 'วิเคราะห์ข้อมูลและสร้างรายงานสรุป' },
+    ];
 
-                <div className="relative z-10 flex flex-col justify-center px-16" style={{ color: '#fff' }}>
-                    <div className="flex items-center gap-4 mb-8">
-                        <div className="w-16 h-16 rounded-2xl flex items-center justify-center animate-float"
-                            style={{ background: 'linear-gradient(135deg, rgba(109, 62, 242, 0.3), rgba(6, 182, 212, 0.2))', boxShadow: '0 0 30px rgba(109, 62, 242, 0.3)' }}>
-                            <Rocket className="w-8 h-8" style={{ color: '#fff' }} />
+    return (
+        <div className="min-h-screen flex bg-space-void selection:bg-cyan-500/30 selection:text-white">
+
+            {/* ===== Background Stars (covers entire page) ===== */}
+            <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                {[...Array(60)].map((_, i) => (
+                    <div key={i} className="absolute rounded-full bg-white animate-twinkle shadow-[0_0_6px_rgba(255,255,255,0.6)]"
+                        style={{
+                            width: `${Math.random() * 2 + 1}px`, height: `${Math.random() * 2 + 1}px`,
+                            top: `${Math.random() * 100}%`, left: `${Math.random() * 100}%`,
+                            animationDelay: `${Math.random() * 5}s`, animationDuration: `${Math.random() * 3 + 2}s`,
+                            opacity: Math.random() * 0.7 + 0.3
+                        }} />
+                ))}
+                <div className="shooting-star" style={{ top: '12%', left: '15%' }}></div>
+                <div className="shooting-star" style={{ top: '55%', left: '65%', animationDelay: '4s' }}></div>
+            </div>
+
+            {/* ===== LEFT PANEL — Website Info ===== */}
+            <div className="hidden lg:flex lg:w-[55%] relative flex-col justify-center items-center p-12 xl:p-16 overflow-hidden">
+
+                {/* Nebula glows */}
+                <div className="absolute top-[-15%] left-[-10%] w-[60%] h-[60%] rounded-full bg-purple-600/25 blur-[140px]"></div>
+                <div className="absolute bottom-[-15%] right-[-5%] w-[50%] h-[50%] rounded-full bg-cyan-500/15 blur-[120px]"></div>
+
+                {/* Floating Moon */}
+                <div className="absolute top-16 right-20 w-28 h-28 rounded-full bg-gradient-to-br from-[#ffebd2] to-[#ffb2dd] shadow-[0_0_80px_rgba(255,235,210,0.5)] animate-float opacity-60" style={{ animationDuration: '7s' }}></div>
+
+                {/* Content */}
+                <div className="relative z-10 max-w-lg animate-fade-in-up">
+                    {/* Logo */}
+                    <div className="flex items-center gap-4 mb-10">
+                        <div className="w-16 h-16 rounded-2xl flex items-center justify-center bg-white/10 backdrop-blur-md shadow-[0_8px_32px_rgba(0,0,0,0.4)] border border-white/15">
+                            <Rocket className="w-9 h-9 text-white drop-shadow-[0_0_12px_rgba(255,255,255,0.7)]" />
                         </div>
                         <div>
-                            <h1 className="text-3xl font-bold" style={{ color: '#fff' }}>Smart Intern</h1>
-                            <p className="text-sm" style={{ color: '#7c5cf7' }}>Tracking System</p>
+                            <h1 className="text-3xl font-black text-white tracking-tight leading-none">Smart Intern</h1>
+                            <p className="text-[11px] font-bold text-cyan-400 tracking-[0.2em] uppercase mt-0.5">Tracking System</p>
                         </div>
                     </div>
-                    <p className="text-lg leading-relaxed mb-12 max-w-md" style={{ color: '#a3a8c4' }}>
-                        ระบบติดตามการฝึกงานอัจฉริยะ จัดการข้อมูลนักศึกษาฝึกงาน ลงเวลา ประเมินผลได้อย่างครบวงจร
+
+                    {/* Tagline */}
+                    <h2 className="text-4xl xl:text-5xl font-black text-white leading-tight mb-4">
+                        ระบบจัดการ<br />
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">นักศึกษาฝึกงาน</span><br />
+                        อัจฉริยะ
+                    </h2>
+                    <p className="text-gray-400 text-base leading-relaxed mb-10 max-w-md">
+                        แพลตฟอร์มครบวงจรสำหรับติดตามและประเมินผลการฝึกงานของนักศึกษา
+                        ใช้งานง่าย ครอบคลุมทุกขั้นตอน ตั้งแต่บันทึกรายวันจนถึงการประเมินผล
                     </p>
-                    <div className="space-y-4">
-                        {[
-                            { emoji: '🛰️', text: 'ลงเวลาเข้า-ออกงานด้วย GPS' },
-                            { emoji: '📡', text: 'ติดตามความก้าวหน้าแบบ Real-time' },
-                            { emoji: '⭐', text: 'ประเมินผลจากครูนิเทศก์และพี่เลี้ยง' },
-                            { emoji: '🌍', text: 'ใช้งานได้ทุกอุปกรณ์' },
-                        ].map((f, i) => (
-                            <div key={i} className="flex items-center gap-3" style={{ color: '#8b90b0' }}>
-                                <span className="text-xl">{f.emoji}</span>
-                                <span className="text-sm">{f.text}</span>
+
+                    {/* Feature Grid */}
+                    <div className="grid grid-cols-2 gap-4">
+                        {features.map((f, i) => (
+                            <div key={i} className="flex items-start gap-3 p-4 rounded-2xl bg-white/[0.04] border border-white/[0.06] backdrop-blur-sm hover:bg-white/[0.08] hover:border-white/[0.12] transition-all duration-300 group">
+                                <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500/20 to-cyan-400/20 flex items-center justify-center border border-white/10 group-hover:from-purple-500/30 group-hover:to-cyan-400/30 transition-all">
+                                    <f.icon className="w-5 h-5 text-cyan-400" />
+                                </div>
+                                <div>
+                                    <p className="text-white text-sm font-bold leading-tight">{f.title}</p>
+                                    <p className="text-gray-500 text-[11px] mt-1 leading-snug">{f.desc}</p>
+                                </div>
                             </div>
                         ))}
+                    </div>
+
+                    {/* Stats */}
+                    <div className="flex items-center gap-8 mt-10 pt-8 border-t border-white/[0.06]">
+                        <div className="flex items-center gap-2">
+                            <Users className="w-4 h-4 text-purple-400" />
+                            <span className="text-white text-sm font-bold">4 บทบาท</span>
+                            <span className="text-gray-500 text-[11px]">ผู้ใช้งาน</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                            <span className="text-white text-sm font-bold">ปลอดภัย</span>
+                            <span className="text-gray-500 text-[11px]">JWT Auth</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            {/* Right - Login Form */}
-            <div className="flex-1 flex items-center justify-center p-8 relative overflow-hidden"
-                style={{ background: 'linear-gradient(135deg, #f8f9fc 0%, #eef1f8 50%, #f0ecf9 100%)' }}>
-                {/* Subtle decorative circles */}
-                <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full blur-3xl" style={{ background: 'rgba(109, 62, 242, 0.06)' }} />
-                <div className="absolute -bottom-20 -left-20 w-64 h-64 rounded-full blur-3xl" style={{ background: 'rgba(34, 211, 238, 0.06)' }} />
+            {/* ===== RIGHT PANEL — Login Form (White) ===== */}
+            <div className="w-full lg:w-[45%] flex items-center justify-center px-6 py-10 relative bg-white">
 
-                <div className="w-full max-w-md relative z-10">
-                    {/* Mobile logo */}
-                    <div className="lg:hidden flex items-center gap-3 mb-6 justify-center">
-                        <div className="w-12 h-12 rounded-2xl flex items-center justify-center"
-                            style={{ background: 'linear-gradient(135deg, #6d3ef2, #22d3ee)' }}>
-                            <Rocket className="w-6 h-6" style={{ color: '#fff' }} />
+                <div className="relative z-10 w-full max-w-[400px] animate-scale-up" style={{ animationDuration: '0.5s' }}>
+
+                    {/* Mobile-only branding */}
+                    <div className="lg:hidden text-center mb-8">
+                        <div className="flex justify-center mb-3">
+                            <div className="w-14 h-14 rounded-2xl flex items-center justify-center bg-[#0f0f23] border border-gray-700">
+                                <Rocket className="w-7 h-7 text-white" />
+                            </div>
+                        </div>
+                        <h1 className="text-2xl font-black text-gray-900">Smart Intern</h1>
+                        <p className="text-[10px] font-bold text-purple-600 tracking-[0.2em] uppercase mt-1">Tracking System</p>
+                    </div>
+
+                    {/* Card Header */}
+                    <div className="text-center mb-8">
+                        <h2 className="text-3xl font-black text-gray-900 tracking-tight">ยินดีต้อนรับ</h2>
+                        <p className="text-gray-400 text-sm mt-2">เข้าสู่ระบบเพื่อใช้งาน</p>
+                    </div>
+
+                    {/* Error */}
+                    {error && (
+                        <div className="mb-5 p-3.5 rounded-xl text-sm font-medium animate-slide-down bg-red-50 text-red-600 border border-red-200 flex items-center justify-center gap-2">
+                            <span>⚠️</span> {error}
+                        </div>
+                    )}
+
+                    {/* Form */}
+                    <form onSubmit={handleSubmit} className="space-y-5">
+                        <div>
+                            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-1.5 block">ชื่อผู้ใช้</label>
+                            <input
+                                type="text"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                className="w-full py-3 px-5 rounded-full bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100 transition-all"
+                                placeholder="Username"
+                                required
+                            />
                         </div>
                         <div>
-                            <h1 className="text-2xl font-bold text-surface-900">Smart Intern</h1>
-                            <p className="text-xs" style={{ color: '#7c5cf7' }}>Tracking System</p>
+                            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-1.5 block">รหัสผ่าน</label>
+                            <input
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                className="w-full py-3 px-5 rounded-full bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100 transition-all"
+                                placeholder="Password"
+                                required
+                            />
+                        </div>
+
+                        <div className="flex items-center justify-between pt-1 pb-2">
+                            <label className="flex items-center gap-2 cursor-pointer group/cb">
+                                <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-purple-600 focus:ring-purple-400 cursor-pointer" />
+                                <span className="text-[12px] font-medium text-gray-500 group-hover/cb:text-gray-900 transition-colors">จดจำฉัน</span>
+                            </label>
+                            <a href="#" className="text-[12px] font-medium text-purple-600 hover:text-purple-800 hover:underline transition-colors">
+                                ลืมรหัสผ่าน?
+                            </a>
+                        </div>
+
+                        <button
+                            type="submit"
+                            disabled={loading}
+                            className="w-full py-3.5 font-bold tracking-wide text-base text-white rounded-full bg-gradient-to-r from-purple-600 to-cyan-500 hover:from-purple-700 hover:to-cyan-600 hover:shadow-lg hover:shadow-purple-200 transition-all duration-300 active:scale-[0.98]"
+                        >
+                            {loading ? 'กำลังเข้าสู่ระบบ...' : 'เข้าสู่ระบบ'}
+                        </button>
+                    </form>
+
+                    {/* Demo Accounts */}
+                    <div className="mt-8 pt-6 border-t border-gray-100">
+                        <p className="text-[10px] text-center text-gray-400 font-bold uppercase tracking-[0.15em] mb-4">ทดลองใช้งาน</p>
+                        <div className="grid grid-cols-2 gap-2.5">
+                            <button type="button" onClick={() => quickLogin('admin', 'admin123')} className="py-2.5 px-3 rounded-xl bg-gray-50 border border-gray-200 text-xs font-bold text-gray-600 hover:bg-purple-50 hover:text-purple-700 hover:border-purple-300 transition-all flex items-center justify-center gap-2 group">
+                                <span className="text-base group-hover:scale-110 transition-transform">👑</span> Admin
+                            </button>
+                            <button type="button" onClick={() => quickLogin('teacher01', 'teacher123')} className="py-2.5 px-3 rounded-xl bg-gray-50 border border-gray-200 text-xs font-bold text-gray-600 hover:bg-purple-50 hover:text-purple-700 hover:border-purple-300 transition-all flex items-center justify-center gap-2 group">
+                                <span className="text-base group-hover:scale-110 transition-transform">👩‍🏫</span> Teacher
+                            </button>
+                            <button type="button" onClick={() => quickLogin('mentor01', 'mentor123')} className="py-2.5 px-3 rounded-xl bg-gray-50 border border-gray-200 text-xs font-bold text-gray-600 hover:bg-purple-50 hover:text-purple-700 hover:border-purple-300 transition-all flex items-center justify-center gap-2 group">
+                                <span className="text-base group-hover:scale-110 transition-transform">🏢</span> Mentor
+                            </button>
+                            <button type="button" onClick={() => quickLogin('student01', 'student123')} className="py-2.5 px-3 rounded-xl bg-gray-50 border border-gray-200 text-xs font-bold text-gray-600 hover:bg-purple-50 hover:text-purple-700 hover:border-purple-300 transition-all flex items-center justify-center gap-2 group">
+                                <span className="text-base group-hover:scale-110 transition-transform">🎓</span> Student
+                            </button>
                         </div>
                     </div>
 
-                    {/* Login Card */}
-                    <div className="bg-white rounded-3xl shadow-xl border border-surface-100/80 overflow-hidden"
-                        style={{ boxShadow: '0 8px 40px rgba(109, 62, 242, 0.08), 0 2px 12px rgba(0,0,0,0.04)' }}>
-                        {/* Gradient accent bar */}
-                        <div className="h-1.5" style={{ background: 'linear-gradient(90deg, #6d3ef2, #22d3ee, #6d3ef2)' }} />
-
-                        <div className="px-8 pt-8 pb-6">
-                            <div className="text-center mb-8">
-                                <div className="w-14 h-14 mx-auto mb-4 rounded-2xl flex items-center justify-center"
-                                    style={{ background: 'linear-gradient(135deg, rgba(109,62,242,0.1), rgba(34,211,238,0.1))' }}>
-                                    <LogIn className="w-7 h-7" style={{ color: '#6d3ef2' }} />
-                                </div>
-                                <h2 className="text-2xl font-bold text-surface-900">เข้าสู่ระบบ</h2>
-                                <p className="text-sm mt-1 text-surface-400">กรอกชื่อผู้ใช้และรหัสผ่าน</p>
-                            </div>
-
-                            {error && (
-                                <div className="mb-6 p-4 rounded-xl text-sm animate-slide-down bg-red-50 text-red-700 border border-red-200">
-                                    {error}
-                                </div>
-                            )}
-
-                            <form onSubmit={handleSubmit} className="space-y-5">
-                                <div>
-                                    <label className="block text-sm font-medium mb-1.5 text-surface-700">ชื่อผู้ใช้</label>
-                                    <input
-                                        type="text"
-                                        value={username}
-                                        onChange={(e) => setUsername(e.target.value)}
-                                        className="w-full px-4 py-3 rounded-xl transition-all text-sm bg-surface-50/80 border border-surface-200 focus:border-primary-400 focus:ring-2 focus:ring-primary-500/20 focus:bg-white"
-                                        placeholder="กรอกชื่อผู้ใช้"
-                                        required
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-medium mb-1.5 text-surface-700">รหัสผ่าน</label>
-                                    <div className="relative">
-                                        <input
-                                            type={showPassword ? 'text' : 'password'}
-                                            value={password}
-                                            onChange={(e) => setPassword(e.target.value)}
-                                            className="w-full px-4 py-3 rounded-xl transition-all text-sm pr-12 bg-surface-50/80 border border-surface-200 focus:border-primary-400 focus:ring-2 focus:ring-primary-500/20 focus:bg-white"
-                                            placeholder="กรอกรหัสผ่าน"
-                                            required
-                                        />
-                                        <button
-                                            type="button"
-                                            onClick={() => setShowPassword(!showPassword)}
-                                            className="absolute right-3 top-1/2 -translate-y-1/2 text-surface-400 hover:text-surface-600 transition-colors"
-                                        >
-                                            {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <button
-                                    type="submit"
-                                    disabled={loading}
-                                    className="w-full py-3 px-4 font-semibold rounded-xl transition-all flex items-center justify-center gap-2 disabled:opacity-50 hover:scale-[1.01] active:scale-[0.99]"
-                                    style={{
-                                        background: 'linear-gradient(135deg, #6d3ef2, #22d3ee)',
-                                        color: '#fff',
-                                        boxShadow: '0 4px 15px rgba(109, 62, 242, 0.3)'
-                                    }}
-                                >
-                                    {loading ? (
-                                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                                    ) : (
-                                        <>
-                                            <LogIn className="w-5 h-5" />
-                                            เข้าสู่ระบบ
-                                        </>
-                                    )}
-                                </button>
-                            </form>
-                        </div>
-
-                        {/* Quick Login Buttons */}
-                        <div className="px-8 pb-8 pt-4 border-t border-surface-100" style={{ background: 'rgba(248,249,252,0.5)' }}>
-                            <p className="text-xs text-center mb-3 text-surface-400">บัญชีทดสอบ</p>
-                            <div className="grid grid-cols-2 gap-2">
-                                {[
-                                    { label: '👨‍💼 Admin', user: 'admin', pass: 'admin123' },
-                                    { label: '👨‍🏫 Teacher', user: 'teacher01', pass: 'teacher123' },
-                                    { label: '👨‍🎓 Student', user: 'student01', pass: 'student123' },
-                                    { label: '👨‍🔧 Mentor', user: 'mentor01', pass: 'mentor123' },
-                                ].map((acc) => (
-                                    <button
-                                        key={acc.user}
-                                        onClick={() => quickLogin(acc.user, acc.pass)}
-                                        disabled={loading}
-                                        className="py-2.5 px-3 rounded-xl text-xs font-medium transition-all disabled:opacity-50 bg-white border border-surface-200 text-surface-600 hover:border-primary-300 hover:text-primary-700 hover:bg-primary-50/50 hover:shadow-sm"
-                                    >
-                                        {acc.label}
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
+                    {/* Footer */}
+                    <p className="text-center text-[11px] text-gray-300 mt-8">
+                        © 2026 Smart Intern Tracking System
+                    </p>
                 </div>
             </div>
         </div>

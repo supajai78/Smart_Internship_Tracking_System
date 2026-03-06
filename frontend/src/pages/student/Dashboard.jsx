@@ -40,27 +40,49 @@ export default function StudentDashboard() {
     return (
         <div className="space-y-6">
             {/* Header */}
-            <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-xl font-bold animate-pulse-glow"
-                        style={{ background: 'linear-gradient(135deg, #6d3ef2, #22d3ee)', color: '#fff' }}>
-                        {user?.firstName?.charAt(0) || 'น'}
-                    </div>
-                    <div>
-                        <h1 className="text-2xl font-bold text-surface-900">สวัสดี, {user?.firstName}! 👋</h1>
-                        <p className="text-sm flex items-center gap-1 mt-0.5 text-surface-500">
-                            <MapPin className="w-3.5 h-3.5" style={{ color: '#6d3ef2' }} />
-                            <span style={{ color: '#6d3ef2' }} className="font-medium">ฝึกงานที่</span> {student.company?.name || 'ยังไม่ระบุสถานประกอบการ'}
+            {/* Hero Section */}
+            <div className="relative mb-8 mt-2">
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                    <div className="max-w-2xl">
+                        {/* Main Tagline */}
+                        <h1 className="text-4xl md:text-5xl font-black tracking-tight leading-tight mb-3">
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 via-accent-500 to-primary-500">
+                                Portfolio
+                            </span>
+                            <br className="hidden md:block" />
+                            <span className="text-surface-900"> & Tracking System</span>
+                        </h1>
+
+                        <p className="text-base text-surface-500 font-medium flex items-center gap-2 max-w-lg leading-relaxed">
+                            <MapPin className="w-4 h-4 text-primary-500 shrink-0" />
+                            กำลังปฏิบัติงานที่: <span className="text-surface-800 font-semibold">{student.company?.name || 'ยังไม่ระบุสถานประกอบการ'}</span>
                         </p>
                     </div>
+
+                    {/* Action Button */}
+                    <div className="shrink-0 mb-1">
+                        <button
+                            onClick={() => navigate('/student/attendance')}
+                            className="group relative flex items-center justify-center gap-3 px-8 py-4 rounded-2xl transition-all font-bold text-base overflow-hidden"
+                            style={{
+                                background: 'linear-gradient(135deg, #0f172a, #1e293b)',
+                                color: '#fff',
+                                boxShadow: '0 10px 30px rgba(15, 23, 42, 0.2)'
+                            }}
+                        >
+                            {/* Hover Gradient Overlay */}
+                            <div className="absolute inset-0 bg-gradient-to-r from-primary-600 to-accent-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                            {/* Content */}
+                            <div className="relative z-10 flex items-center gap-2">
+                                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center backdrop-blur-md">
+                                    <MapPin className="w-4 h-4 text-accent-400 group-hover:text-white transition-colors" />
+                                </div>
+                                <span className="tracking-wide">เช็คอินเข้างาน</span>
+                            </div>
+                        </button>
+                    </div>
                 </div>
-                <button
-                    onClick={() => navigate('/student/attendance')}
-                    className="flex items-center gap-2 px-5 py-2.5 rounded-xl transition-all text-sm font-medium"
-                    style={{ background: 'linear-gradient(135deg, #6d3ef2, #22d3ee)', color: '#fff', boxShadow: '0 4px 15px rgba(109, 62, 242, 0.25)' }}
-                >
-                    <MapPin className="w-4 h-4" />ลงเวลาเข้างาน
-                </button>
             </div>
 
             {/* Dark hero card - this keeps dark space look */}
@@ -129,10 +151,11 @@ export default function StudentDashboard() {
                 </div>
             </div>
 
-            {/* Bottom info cards - WHITE */}
+            {/* Bottom info cards - Glass Panel */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-white rounded-2xl p-6 shadow-sm border border-surface-100">
-                    <h3 className="font-semibold text-surface-800 flex items-center gap-2 mb-4">
+                <div className="glass-panel rounded-3xl p-7 relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-primary-500/5 rounded-full blur-3xl -mr-10 -mt-10 transition-transform group-hover:scale-150" />
+                    <h3 className="font-bold text-surface-900 flex items-center gap-2 mb-5 text-lg tracking-tight">
                         <Building2 className="w-5 h-5" style={{ color: '#6d3ef2' }} />สถานประกอบการ
                     </h3>
                     {student.company ? (
@@ -157,9 +180,10 @@ export default function StudentDashboard() {
                     )}
                 </div>
 
-                <div className="bg-white rounded-2xl p-6 shadow-sm border border-surface-100">
-                    <h3 className="font-semibold text-surface-800 flex items-center gap-2 mb-4">
-                        <User className="w-5 h-5" style={{ color: '#6d3ef2' }} />ครูนิเทศก์
+                <div className="glass-panel rounded-3xl p-7 relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 rounded-full blur-3xl -mr-10 -mt-10 transition-transform group-hover:scale-150" />
+                    <h3 className="font-bold text-surface-900 flex items-center gap-2 mb-5 text-lg tracking-tight">
+                        <User className="w-5 h-5" style={{ color: '#22d3ee' }} />ครูนิเทศก์
                     </h3>
                     {student.teacher ? (
                         <div className="space-y-3">
