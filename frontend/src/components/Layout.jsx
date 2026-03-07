@@ -1,13 +1,19 @@
 import { useState, useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import { useAuth } from '../contexts/AuthContext';
-import { Menu, Calendar, Search, Bell, Settings } from 'lucide-react';
+import { Menu, Calendar, Search, Bell, Settings, LogOut } from 'lucide-react';
 
 export default function Layout() {
     const [collapsed, setCollapsed] = useState(false);
     const [currentTime, setCurrentTime] = useState(new Date());
-    const { user } = useAuth();
+    const { user, logout } = useAuth();
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logout();
+        navigate('/login');
+    };
 
     useEffect(() => {
         const timer = setInterval(() => setCurrentTime(new Date()), 60000);
@@ -31,17 +37,23 @@ export default function Layout() {
             <Sidebar collapsed={collapsed} onToggle={() => setCollapsed(!collapsed)} />
 
             {/* Main Content */}
-            <div className={`transition-all duration-300 relative z-10 ${collapsed ? 'ml-20' : 'ml-64'}`}>
+            <div className={`transition-all duration-300 relative z-10 ml-0 ${collapsed ? 'md:ml-20' : 'md:ml-64'} pb-24 md:pb-0`}>
                 {/* Top Header - Floating Glass */}
                 <header className="sticky top-4 z-20 mx-6 mb-6 px-6 py-4 glass-panel rounded-2xl">
                     <div className="flex items-center justify-between max-w-7xl mx-auto">
                         <div className="flex items-center gap-4">
-                            <button
-                                onClick={() => setCollapsed(!collapsed)}
-                                className="lg:hidden p-2 rounded-lg text-surface-500 hover:bg-surface-100"
-                            >
-                                <Menu className="w-5 h-5" />
-                            </button>
+                            {/* Mobile Hamburger Menu replaced by Mobile Top Info/Logout */}
+                            <div className="md:hidden flex items-center gap-3">
+                                <div className="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm text-white"
+                                    style={{ background: 'linear-gradient(135deg, #6d3ef2, #22d3ee)' }}>
+                                    {user?.firstName?.charAt(0) || 'U'}
+                                </div>
+                                <div className="flex flex-col">
+                                    <span className="text-xs font-bold text-surface-900 leading-none">{user?.firstName}</span>
+                                    <span className="text-[10px] text-primary-500 font-semibold">{user?.role}</span>
+                                </div>
+                            </div>
+
                             <div className="hidden md:flex items-center gap-2 text-sm font-medium px-4 py-2 rounded-xl bg-white/50 border border-surface-200/50" style={{ color: '#6d3ef2' }}>
                                 <Calendar className="w-4 h-4 opacity-70" />
                                 <span>{formattedDate}</span>
@@ -73,13 +85,21 @@ export default function Layout() {
                                             user?.role === 'mentor' ? 'พี่เลี้ยงประจำอู่' : 'นักศึกษาฝึกงาน'}
                                 </span>
                             </div>
-                            <div className="w-10 h-10 rounded-xl text-white flex items-center justify-center font-bold text-base border-2 border-white shadow-sm"
+                            <div className="w-10 h-10 rounded-xl text-white hidden sm:flex items-center justify-center font-bold text-base border-2 border-white shadow-sm"
                                 style={{
                                     background: 'linear-gradient(135deg, #6d3ef2, #22d3ee)',
                                     boxShadow: '0 4px 15px rgba(109, 62, 242, 0.25)'
                                 }}>
                                 {user?.firstName?.charAt(0) || 'U'}
                             </div>
+
+                            {/* Mobile Logout Button */}
+                            <button
+                                onClick={handleLogout}
+                                className="md:hidden p-2 rounded-xl text-red-500 hover:bg-red-50 transition-all bg-white/50 border border-red-100"
+                            >
+                                <LogOut className="w-5 h-5" />
+                            </button>
                         </div>
                     </div>
                 </header>
